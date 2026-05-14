@@ -3,40 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turan Karakoç Hukuk Bürosu</title>
+    <title>Turan&Karakoç Hukuk Bürosu</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<div class="sidebar"></div>
+<div class="sidebar">
+    <div>
+        <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
 
-<div class="container">
-    <div class="header">
-        <h1>Turan Karakoç Hukuk Bürosu</h1>
-        <p>Online Hukuki Danışmanlık ve Randevu Sistemi</p>
+        <div class="brand-text">
+            <h2>Turan&Karakoç</h2>
+            <p>Hukuk Bürosu</p>
+        </div>
+
+        <nav class="menu">
+            <a href="/" class="active"><i class="fas fa-house"></i> Ana Sayfa</a>
+            <a href="/appointment"><i class="fas fa-calendar-days"></i> Randevu Al</a>
+            <a href="/client-login"><i class="fas fa-user"></i> Müvekkil Girişi</a>
+            <a href="/login"><i class="fas fa-shield-halved"></i> Admin Girişi</a>
+        </nav>
     </div>
 
-    <div class="appointment">
-        <h2>Müvekkil Paneli</h2>
-        <p>Mevcut randevularınızı ve başvurularınızı görüntüleyin.</p>
-        <a href="/client-login">
-            <button>Müvekkil Girişi</button>
-        </a>
+    <div class="contact-box">
+        <div class="lawyer">
+            <strong>Av. Murat Karakoç</strong>
+            <span>0530 911 81 33</span>
+            <span>av.muratkarakoc@hotmail.com</span>
+        </div>
+
+        <div class="lawyer">
+            <strong>Av. Mehmet Ali Turan</strong>
+            <span>0534 820 64 54</span>
+            <span>av.mehmetalituran@hotmail.com</span>
+        </div>
+
+        <div class="address">
+            <i class="fas fa-location-dot"></i>
+            Şeker Mahallesi, Kader Sokak No: 30<br>
+            Şenol Morgül İş Merkezi Kat: 2<br>
+            Adapazarı / Sakarya
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="top-info">
+        <i class="fas fa-clock"></i>
+        Hafta içi 10:00 - 17:00 | 30 dakikalık randevu aralıkları
     </div>
 
-    <div class="appointment">
-        <h2>Yönetici Paneli</h2>
-        <p>Randevuları yönetin ve başvuruları inceleyin.</p>
-        <a href="/login">
-            <button>Yönetici Girişi</button>
-        </a>
-    </div>
+    <div class="hero">
+        <h1>Turan&Karakoç Hukuk Bürosu</h1>
+        <p>
+            Hukuki süreçlerinizde profesyonel destek almak için
+            online randevu oluşturabilir, uygun saatleri görüntüleyebilirsiniz.
+        </p>
 
-    <div class="appointment">
-        <h2>Yeni Randevu Talebi</h2>
-        <p>Online olarak yeni randevu oluşturun.</p>
-        <a href="/appointment">
-            <button>Randevu Oluştur</button>
+        <div class="features">
+            <div class="card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Kolay Randevu</h3>
+                <p>Size uygun tarih ve saati seçin.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h3>Esnek Saatler</h3>
+                <p>Hafta içi 10:00 - 17:00</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-lock"></i>
+                <h3>Güvenli Sistem</h3>
+                <p>Kişisel verileriniz korunur.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-scale-balanced"></i>
+                <h3>Profesyonel Destek</h3>
+                <p>Deneyimli hukuki danışmanlık.</p>
+            </div>
+        </div>
+
+        <a href="/appointment" class="cta-button">
+            <i class="fas fa-calendar-days"></i>
+            RANDEVU AL
         </a>
     </div>
 </div>

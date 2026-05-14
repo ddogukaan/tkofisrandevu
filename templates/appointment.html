@@ -22,26 +22,76 @@
 
     <form method="POST">
         <input type="text" name="name" placeholder="Ad Soyad" required>
-        <input type="text" name="phone" placeholder="Telefon" required>
+        <input type="tel" id="phone" name="phone" required>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
 
         <select name="case_type">
             <option>Boşanma Hukuku</option>
+	    <option>Borçlar Hukuku (Alacak/ Sözleşmeler vs.)</option>
+	    <option>Taşınmaz Hukuku(Tapu İptal/Ortaklığın Giderilmesi vs.)</option>
             <option>İcra Hukuku</option>
             <option>Ceza Hukuku</option>
-            <option>İş Hukuku</option>
-            <option>Miras Hukuku</option>
+            <option>İş Hukuku(Fesih/Tazminat vs.)</option>
+            <option>Miras Hukuku(Vasiyetname/ Saklı Pay vs.)</option>
             <option>Ticaret Hukuku</option>
-            <option>Diğer</option>
+            <option>Şirket Danışmanlığı</option>
+	    <option>Diğer</option>
         </select>
 
-        <textarea name="summary" placeholder="Hukuki olayın kısa özeti"></textarea>
+        <textarea name="summary" placeholder="Hukuki olayın kısa özeti" required></textarea>
 
-        <input type="date" name="date" required>
-        <input type="time" name="time" required>
+        <input type="date" name="date" id="datePicker" required>
+
+        <select name="time" id="timeSelect" required>
+            <option value="">Önce tarih seçin</option>
+        </select>
 
         <button type="submit">Randevu Oluştur</button>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+<script>
+const phoneInput = document.querySelector("#phone");
+
+window.intlTelInput(phoneInput, {
+    initialCountry: "tr",
+    preferredCountries: ["tr", "de", "gb", "us"],
+    separateDialCode: true,
+    nationalMode: false,
+    autoPlaceholder: "aggressive"
+});
+
+</script>
+<script>
+document.getElementById("datePicker").addEventListener("change", async function() {
+    const date = this.value;
+    const response = await fetch(`/available-slots?date=${date}`);
+    const slots = await response.json();
+
+    const timeSelect = document.getElementById("timeSelect");
+    timeSelect.innerHTML = "";
+
+    if (slots.length === 0) {
+        timeSelect.innerHTML = '<option>Uygun slot yok</option>';
+        return;
+    }
+
+    slots.forEach(slot => {
+        const option = document.createElement("option");
+        option.value = slot.time;
+
+        if (slot.available) {
+            option.textContent = `🟢 ${slot.time} BOŞ`;
+        } else {
+            option.textContent = `🔴 ${slot.time} DOLU`;
+            option.disabled = true;
+        }
+
+        timeSelect.appendChild(option);
+    });
+});
+</script>
 
 </body>
 </html>

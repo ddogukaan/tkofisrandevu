@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "turan_karakoc_super_secret_2026"
@@ -18,7 +19,7 @@ def init_db():
             name TEXT NOT NULL,
             phone TEXT NOT NULL,
             case_type TEXT NOT NULL,
-            summary TEXT,
+            summary TEXT NOT NULL,
             date TEXT NOT NULL,
             time TEXT NOT NULL
         )
@@ -26,6 +27,18 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+
+def generate_slots():
+    slots = []
+    current = datetime.strptime("10:00", "%H:%M")
+    end = datetime.strptime("17:00", "%H:%M")
+
+    while current < end:
+        slots.append(current.strftime("%H:%M"))
+        current += timedelta(minutes=30)
+
+    return slots
 
 
 @app.route("/")
@@ -36,6 +49,7 @@ def home():
 @app.route("/appointment", methods=["GET", "POST"])
 def appointment():
     error = None
+
     conn = sqlite3.connect("appointments.db")
     cursor = conn.cursor()
 
@@ -47,23 +61,65 @@ def appointment():
         date = request.form["date"]
         time = request.form["time"]
 
-        cursor.execute(
-            "SELECT * FROM appointments WHERE date=? AND time=?",
-            (date, time)
-        )
-
-        if cursor.fetchone():
-            error = "Bu saat dolu."
+        if not summary.strip():
+            error = "Hukuki olay özeti zorunludur."
         else:
-            cursor.execute("""
-                INSERT INTO appointments
-                (name, phone, case_type, summary, date, time)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (name, phone, case_type, summary, date, time))
-            conn.commit()
+            chosen_date = datetime.strptime(date, "%Y-%m-%d")
+
+            if chosen_date.weekday() in [5, 6]:
+                error = "Hafta sonu randevu alınamaz."
+            else:
+                cursor.execute(
+                    "SELECT * FROM appointments WHERE date=? AND time=?",
+                    (date, time)
+                )
+
+                if cursor.fetchone():
+                    error = "Bu saat dolu."
+                else:
+                    cursor.execute("""
+                        INSERT INTO appointments
+                        (name, phone, case_type, summary, date, time)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, (name, phone, case_type, summary, date, time))
+
+                    conn.commit()
 
     conn.close()
     return render_template("appointment.html", error=error)
+
+
+@app.route("/available-slots")
+def available_slots():
+    date = request.args.get("date")
+
+    if not date:
+        return jsonify([])
+
+    chosen_date = datetime.strptime(date, "%Y-%m-%d")
+
+    if chosen_date.weekday() in [5, 6]:
+        return jsonify([])
+
+    conn = sqlite3.connect("appointments.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT time FROM appointments WHERE date=?", (date,))
+    booked = [row[0] for row in cursor.fetchall()]
+
+    conn.close()
+
+    slots = generate_slots()
+
+    result = []
+
+    for slot in slots:
+        result.append({
+            "time": slot,
+            "available": slot not in booked
+        })
+
+    return jsonify(result)
 
 
 @app.route("/login", methods=["GET", "POST"])

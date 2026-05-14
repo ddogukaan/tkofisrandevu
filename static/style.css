@@ -1,56 +1,237 @@
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: Arial, sans-serif;
-    background: #eef2f7;
+    background: #f4f7fb;
+    color: #1b1b1b;
 }
 
 .sidebar {
     position: fixed;
-    left: 0;
     top: 0;
-    width: 90px;
+    left: 0;
+    width: 340px;
     height: 100vh;
-    background: #0d2b52;
+    background: linear-gradient(180deg, #081F45 0%, #061833 100%);
+    padding: 35px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 6px 0 25px rgba(0,0,0,0.18);
 }
 
-.container {
-    margin-left: 140px;
-    max-width: 900px;
+.logo {
+    width: 190px;
+    display: block;
+    margin: 0 auto 18px;
+    border-radius: 12px;
+}
+
+.brand-text {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.brand-text h2 {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.brand-text p {
+    color: #c9d6ea;
+    font-size: 15px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    padding: 15px 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.menu a i {
+    margin-right: 10px;
+}
+
+.menu a:hover,
+.menu .active {
+    background: rgba(255,255,255,0.15);
+}
+
+.contact-box {
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 20px;
+    color: white;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.lawyer {
+    margin-bottom: 18px;
+}
+
+.lawyer strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.lawyer span {
+    display: block;
+    color: #d7e3f7;
+}
+
+.address {
+    margin-top: 10px;
+    color: #d7e3f7;
+}
+
+.address i {
+    margin-right: 6px;
+}
+
+.main-content {
+    margin-left: 380px;
     padding: 40px;
 }
 
-.header {
+.top-info {
+    background: white;
+    padding: 16px 24px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     margin-bottom: 30px;
+    font-size: 15px;
+    color: #081F45;
+    font-weight: bold;
 }
 
-.header h1 {
-    color: #0d2b52;
-    margin-bottom: 5px;
+.top-info i {
+    margin-right: 8px;
 }
 
-.header p {
+.hero {
+    background: white;
+    border-radius: 24px;
+    padding: 55px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: #081F45;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    font-size: 18px;
     color: #555;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: #f8fbff;
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+}
+
+.card i {
+    font-size: 28px;
+    color: #081F45;
+    margin-bottom: 14px;
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #081F45;
+}
+
+.card p {
+    font-size: 15px;
     margin: 0;
 }
 
-.header small {
-    color: #777;
+.cta-button {
+    display: inline-block;
+    background: #081F45;
+    color: white;
+    padding: 18px 34px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.cta-button i {
+    margin-right: 10px;
+}
+
+.container {
+    margin-left: 380px;
+    padding: 40px;
+    max-width: 1000px;
+}
+
+.header {
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: #081F45;
+    font-size: 36px;
+}
+
+.header p {
+    color: #666;
+    margin-top: 8px;
 }
 
 form {
     background: white;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
 }
 
 input, select, textarea {
-    padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #d9e2ef;
+    border-radius: 14px;
     font-size: 15px;
 }
 
@@ -60,28 +241,29 @@ textarea {
 }
 
 button {
-    background: #0d2b52;
+    background: #081F45;
     color: white;
     border: none;
-    padding: 14px;
-    border-radius: 10px;
-    cursor: pointer;
+    padding: 16px;
+    border-radius: 14px;
     font-size: 15px;
+    cursor: pointer;
 }
 
 button:hover {
-    opacity: 0.9;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
+    opacity: 0.95;
 }
 
 .appointment {
     background: white;
-    padding: 22px;
-    margin-bottom: 20px;
-    border-radius: 14px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+}
+
+.error {
+    color: #c62828;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
