@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turan Karakoç Hukuk Bürosu Randevu Sistemi</title>
+    <title>Turan Karakoç Hukuk Bürosu</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -13,35 +13,32 @@
 <div class="container">
     <div class="header">
         <h1>Turan Karakoç Hukuk Bürosu</h1>
-        <p>Online Randevu Sistemi</p>
-        <small>turankarakochukukrandevu.com</small>
+        <p>Online Hukuki Danışmanlık ve Randevu Sistemi</p>
     </div>
 
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
+    <div class="appointment">
+        <h2>Müvekkil Paneli</h2>
+        <p>Mevcut randevularınızı ve başvurularınızı görüntüleyin.</p>
+        <a href="/client-login">
+            <button>Müvekkil Girişi</button>
+        </a>
+    </div>
 
-    <form method="POST">
-        <input type="text" name="name" placeholder="Ad Soyad" required>
-        <input type="text" name="phone" placeholder="Telefon" required>
+    <div class="appointment">
+        <h2>Yönetici Paneli</h2>
+        <p>Randevuları yönetin ve başvuruları inceleyin.</p>
+        <a href="/login">
+            <button>Yönetici Girişi</button>
+        </a>
+    </div>
 
-        <select name="case_type">
-            <option>Boşanma Hukuku</option>
-            <option>İcra Hukuku</option>
-            <option>Ceza Hukuku</option>
-            <option>İş Hukuku</option>
-            <option>Miras Hukuku</option>
-            <option>Ticaret Hukuku</option>
-            <option>Diğer</option>
-        </select>
-
-        <textarea name="summary" placeholder="Hukuki olayın kısa özeti"></textarea>
-
-        <input type="date" name="date" required>
-        <input type="time" name="time" required>
-
-        <button type="submit">Randevu Oluştur</button>
-    </form>
+    <div class="appointment">
+        <h2>Yeni Randevu Talebi</h2>
+        <p>Online olarak yeni randevu oluşturun.</p>
+        <a href="/appointment">
+            <button>Randevu Oluştur</button>
+        </a>
+    </div>
 </div>
 
 </body>

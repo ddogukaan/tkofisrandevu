@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "turan_karakoc_super_secret_2026"
+
+ADMIN_USERNAME = "turankarakoc"
+ADMIN_PASSWORD = "123456"
+
 
 def init_db():
     conn = sqlite3.connect("appointments.db")
@@ -22,8 +27,14 @@ def init_db():
     conn.commit()
     conn.close()
 
-@app.route("/", methods=["GET", "POST"])
-def index():
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/appointment", methods=["GET", "POST"])
+def appointment():
     error = None
     conn = sqlite3.connect("appointments.db")
     cursor = conn.cursor()
@@ -52,10 +63,36 @@ def index():
             conn.commit()
 
     conn.close()
-    return render_template("index.html", error=error)
+    return render_template("appointment.html", error=error)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = None
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session["admin"] = True
+            return redirect("/admin")
+        else:
+            error = "Hatalı giriş."
+
+    return render_template("login.html", error=error)
+
+
+@app.route("/client-login")
+def client_login():
+    return "<h1>Müvekkil paneli yakında eklenecek.</h1>"
+
 
 @app.route("/admin")
 def admin():
+    if not session.get("admin"):
+        return redirect("/login")
+
     conn = sqlite3.connect("appointments.db")
     cursor = conn.cursor()
 
@@ -66,8 +103,12 @@ def admin():
 
     return render_template("admin.html", appointments=appointments)
 
+
 @app.route("/delete/<int:id>")
 def delete(id):
+    if not session.get("admin"):
+        return redirect("/login")
+
     conn = sqlite3.connect("appointments.db")
     cursor = conn.cursor()
 
@@ -76,6 +117,13 @@ def delete(id):
     conn.close()
 
     return redirect("/admin")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
 
 if __name__ == "__main__":
     init_db()

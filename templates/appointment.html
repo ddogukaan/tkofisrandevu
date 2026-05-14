@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Oluştur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="sidebar"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Randevu Oluştur</h1>
+        <p>Turan Karakoç Hukuk Bürosu</p>
+    </div>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <input type="text" name="name" placeholder="Ad Soyad" required>
+        <input type="text" name="phone" placeholder="Telefon" required>
+
+        <select name="case_type">
+            <option>Boşanma Hukuku</option>
+            <option>İcra Hukuku</option>
+            <option>Ceza Hukuku</option>
+            <option>İş Hukuku</option>
+            <option>Miras Hukuku</option>
+            <option>Ticaret Hukuku</option>
+            <option>Diğer</option>
+        </select>
+
+        <textarea name="summary" placeholder="Hukuki olayın kısa özeti"></textarea>
+
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+
+        <button type="submit">Randevu Oluştur</button>
+    </form>
+</div>
+
+</body>
+</html>
