@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="sidebar"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Yönetici Paneli</h1>
+        <p>Turan Karakoç Hukuk Bürosu</p>
+    </div>
+
+    {% for appt in appointments %}
+        <div class="appointment">
+            <div><strong>Müvekkil:</strong> {{ appt[1] }}</div>
+            <div><strong>Telefon:</strong> {{ appt[2] }}</div>
+            <div><strong>Dava Türü:</strong> {{ appt[3] }}</div>
+            <div><strong>Olay Özeti:</strong> {{ appt[4] }}</div>
+            <div><strong>Randevu Tarihi:</strong> {{ appt[5] }}</div>
+            <div><strong>Randevu Saati:</strong> {{ appt[6] }}</div>
+
+            <br>
+
+            <a href="/delete/{{ appt[0] }}">
+                <button>Randevuyu Sil</button>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
